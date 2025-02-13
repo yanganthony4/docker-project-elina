@@ -41,12 +41,6 @@ export default function NotesApp() {
     setEditingNote(null);
   };
 
-  // Handle Edit
-  const handleEdit = (note) => {
-    setTitle(note.title);
-    setContent(note.content);
-    setEditingNote(note);
-  };
 
   // Handle Delete
   const handleDelete = async (id) => {
