@@ -1,7 +1,5 @@
-version: '3.9'
-
 services:
-  backend:
+  backend1:
     build: ./app/backend
     ports:
       - "5000:5000"
@@ -12,18 +10,30 @@ services:
     networks:
       - app-network
 
+  backend2:
+    build: ./app/backend
+    ports:
+      - "5001:5000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/notes-db" 
+    networks:
+      - app-network
+
   frontend:
     build: ./app/frontend
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      - backend1
+      - backend2
     networks:
       - app-network
 
   mongo:
     image: mongo:latest
-    container_name: mongo2
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:

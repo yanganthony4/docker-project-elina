@@ -36,12 +36,17 @@ router.put("/:id", async (req, res) => {
     if (existingNote) {
       return res.status(400).json({ error: "Another note with this title already exists" });
     }
-
+    
     const updatedNote = await Note.findByIdAndUpdate(
       req.params.id,
       { title, content },
       { new: true }
     );
+   
+    if (!updatedNote) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
 
     res.json(updatedNote);
   } catch (err) {
